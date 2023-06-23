@@ -1,4 +1,4 @@
-package com.jetpacker06.modpackage;
+package com.jetpacker06.eggerator;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -7,13 +7,12 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-//Mod ID can have ONLY LOWERCASE LETTERS. No numbers, no underscores, no characters, no capitals, no spaces.
-@Mod(ModMainClass.MOD_ID)
-public class ModMainClass {
-    public static final String MOD_ID = "yourmodidhere";
+@Mod(EggeratorMod.MOD_ID)
+public class EggeratorMod {
+    public static final String MOD_ID = "eggerator";
     public static final Logger LOGGER = LogManager.getLogger();
 
-    public ModMainClass() {
+    public EggeratorMod() {
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
         ModBlocks.register(eventBus);
         ModItems.register(eventBus);
