@@ -19,6 +19,7 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nonnull;
 import java.util.Random;
 
+@SuppressWarnings("unused")
 public class EggeratorBlockEntity extends BlockEntity {
 
     public EggeratorBlockEntity(BlockPos pWorldPosition, BlockState pBlockState) {
