@@ -1,0 +1,10 @@
+{
+  "tooltip.eggerator.chickens": "Chickens: ",
+  "tooltip.eggerator.empty": "Empty",
+
+  "label.eggerator.egglayingrecipelabel": "Egg Laying",
+
+  "block.eggerator.eggerator": "Eggerator",
+
+  "info.eggerator.eggerator": "The egg generator. Right-click while holding a chicken to cage it. Holds a maximum amount of chickens equal to the GameRule entityCrammingThreshold (Default 24).\nWhen placed, right-click or use hoppers to extract the eggs."
+}

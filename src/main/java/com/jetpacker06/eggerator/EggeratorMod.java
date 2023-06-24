@@ -14,8 +14,7 @@ public class EggeratorMod {
 
     public EggeratorMod() {
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        ModBlocks.register(eventBus);
-        ModItems.register(eventBus);
+        ModRegistry.register(eventBus);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         MinecraftForge.EVENT_BUS.register(this);
     }

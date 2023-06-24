@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_column",
+  "textures": {
+    "side": "eggerator:block/eggerator_side",
+    "end": "eggerator:block/eggerator_end"
+  }
+}
