@@ -56,9 +56,6 @@ public class EggeratorBlockItem extends BlockItem {
         if (!tag.contains("chickens")) {
             tag.putInt("chickens", 0);
         }
-        if (!tag.contains("eggs")) {
-            tag.putInt("eggs", 0);
-        }
     }
 
     @Override
@@ -77,9 +74,5 @@ public class EggeratorBlockItem extends BlockItem {
     public static int getChickens(ItemStack pStack) {
         assert pStack.getTag() != null;
         return pStack.getTag().getInt("chickens");
-    }
-    public static int getEggs(ItemStack pStack) {
-        assert pStack.getTag() != null;
-        return pStack.getTag().getInt("eggs");
     }
 }

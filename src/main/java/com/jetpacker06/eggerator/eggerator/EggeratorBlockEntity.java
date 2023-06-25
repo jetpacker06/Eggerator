@@ -3,7 +3,10 @@ package com.jetpacker06.eggerator.eggerator;
 import com.jetpacker06.eggerator.ModRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.Containers;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -25,8 +28,14 @@ public class EggeratorBlockEntity extends BlockEntity {
     public EggeratorBlockEntity(BlockPos pWorldPosition, BlockState pBlockState) {
         super(ModRegistry.EGGERATOR_BLOCK_ENTITY.get(), pWorldPosition, pBlockState);
     }
-    public void drops() {
-        // TODO: Drop the block with NBT value of chicken count and number of eggs stored.
+    public void drops(Level pLevel) {
+        ItemStack blockStack = new ItemStack(ModRegistry.EGGERATOR_BLOCK_ITEM.get());
+        CompoundTag tag = new CompoundTag();
+        tag.putInt("chickens", this.getChickens());
+        blockStack.setTag(tag);
+
+        NonNullList<ItemStack> stacksToDrop = NonNullList.of(blockStack, this.grabEggs());
+        Containers.dropContents(pLevel, this.getBlockPos(), new SimpleContainer(blockStack));
     }
 
     private final ItemStackHandler itemHandler = new ItemStackHandler(1) {
