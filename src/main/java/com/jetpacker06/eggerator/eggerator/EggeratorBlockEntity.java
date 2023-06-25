@@ -6,7 +6,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.Containers;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -35,7 +34,7 @@ public class EggeratorBlockEntity extends BlockEntity {
         blockStack.setTag(tag);
 
         NonNullList<ItemStack> stacksToDrop = NonNullList.of(blockStack, this.grabEggs());
-        Containers.dropContents(pLevel, this.getBlockPos(), new SimpleContainer(blockStack));
+        Containers.dropContents(pLevel, this.getBlockPos(), stacksToDrop);
     }
 
     private final ItemStackHandler itemHandler = new ItemStackHandler(1) {
