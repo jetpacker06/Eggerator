@@ -38,7 +38,7 @@ public class EggeratorBlock extends BaseEntityBlock implements EntityBlock {
         }
         BlockEntity bE = pLevel.getBlockEntity(pPos);
         if (bE instanceof EggeratorBlockEntity eBE) {
-            eBE.drops();
+            eBE.drops(pLevel);
         }
     }
 

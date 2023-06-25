@@ -25,7 +25,6 @@ public class EventHandling {
         assert usedStack.getTag() != null;
         EggeratorBlockEntity be = (EggeratorBlockEntity) event.getEntity().getLevel().getBlockEntity(event.getPos());
         assert be != null;
-        be.setEggCount(usedStack.getTag().getInt("eggs"));
         be.setChickens(usedStack.getTag().getInt("chickens"));
     }
 }

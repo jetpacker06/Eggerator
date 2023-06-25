@@ -56,9 +56,6 @@ public class EggeratorBlockItem extends BlockItem {
         if (!tag.contains("chickens")) {
             tag.putInt("chickens", 0);
         }
-        if (!tag.contains("eggs")) {
-            tag.putInt("eggs", 0);
-        }
     }
 
     @Override
