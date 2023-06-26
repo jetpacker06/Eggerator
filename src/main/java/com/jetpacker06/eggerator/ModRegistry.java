@@ -3,14 +3,11 @@ package com.jetpacker06.eggerator;
 import com.jetpacker06.eggerator.eggerator.EggeratorBlock;
 import com.jetpacker06.eggerator.eggerator.EggeratorBlockEntity;
 import com.jetpacker06.eggerator.eggerator.EggeratorBlockItem;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -32,7 +29,7 @@ public class ModRegistry {
     public static RegistryObject<BlockEntityType<EggeratorBlockEntity>> EGGERATOR_BLOCK_ENTITY;
 
     static {
-        EGGERATOR = BLOCKS.register("eggerator", () -> new EggeratorBlock(BlockBehaviour.Properties.of(Material.METAL)
+        EGGERATOR = BLOCKS.register("eggerator", () -> new EggeratorBlock(BlockBehaviour.Properties.of()
                 .sound(SoundType.METAL)
                 .strength(6)
                 .explosionResistance(9)

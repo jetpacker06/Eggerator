@@ -3,9 +3,7 @@ package com.jetpacker06.eggerator;
 import com.jetpacker06.eggerator.eggerator.EggeratorBlockEntity;
 import com.jetpacker06.eggerator.eggerator.EggeratorBlockItem;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.event.CreativeModeTabEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -25,7 +23,7 @@ public class EventHandling {
                 : player.getOffhandItem();
         EggeratorBlockItem.ensureEggeratorTags(usedStack);
         assert usedStack.getTag() != null;
-        EggeratorBlockEntity be = (EggeratorBlockEntity) event.getEntity().getLevel().getBlockEntity(event.getPos());
+        EggeratorBlockEntity be = (EggeratorBlockEntity) event.getEntity().level().getBlockEntity(event.getPos());
         assert be != null;
         be.setChickens(usedStack.getTag().getInt("chickens"));
     }
