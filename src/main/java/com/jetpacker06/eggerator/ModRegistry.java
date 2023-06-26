@@ -16,21 +16,11 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-import java.util.function.Supplier;
-
 public class ModRegistry {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, EggeratorMod.MOD_ID);
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, EggeratorMod.MOD_ID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, EggeratorMod.MOD_ID);
 
-    private static <T extends Block> RegistryObject<T> registerBlock(Supplier<T> block) {
-        RegistryObject<T> toReturn = BLOCKS.register("eggerator", block);
-        registerBlockItem("eggerator", toReturn);
-        return toReturn;
-    }
-    private static <T extends Block>RegistryObject<Item> registerBlockItem(String name, RegistryObject<T> block) {
-        return ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
-    }
     public static void register(IEventBus eventBus) {
         BLOCKS.register(eventBus);
         ITEMS.register(eventBus);
@@ -49,7 +39,7 @@ public class ModRegistry {
                 .requiresCorrectToolForDrops()
         ));
         EGGERATOR_BLOCK_ITEM = ITEMS.register("eggerator",
-                () -> new EggeratorBlockItem(EGGERATOR.get(), new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE))
+                () -> new EggeratorBlockItem(EGGERATOR.get(), new Item.Properties())
         );
         EGGERATOR_BLOCK_ENTITY = BLOCK_ENTITIES.register("eggerator", () ->
                 BlockEntityType.Builder.of(EggeratorBlockEntity::new, ModRegistry.EGGERATOR.get()).build(null));
