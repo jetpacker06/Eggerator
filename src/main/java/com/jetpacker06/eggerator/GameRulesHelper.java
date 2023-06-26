@@ -1,7 +1,7 @@
 package com.jetpacker06.eggerator;
 
 import net.minecraft.world.level.GameRules;
-import net.minecraftforge.event.world.WorldEvent;
+import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -14,7 +14,7 @@ public class GameRulesHelper {
     public static final Supplier<Integer> entityCramThreshold = () -> gameRules.getInt(GameRules.RULE_MAX_ENTITY_CRAMMING);
 
     @SubscribeEvent
-    public static void onWorldLoad(WorldEvent.Load event) {
-        gameRules = event.getWorld().getLevelData().getGameRules();
+    public static void onWorldLoad(LevelEvent.Load event) {
+        gameRules = event.getLevel().getLevelData().getGameRules();
     }
 }

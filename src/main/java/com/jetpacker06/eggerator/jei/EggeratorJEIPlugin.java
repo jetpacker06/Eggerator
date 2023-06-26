@@ -8,7 +8,7 @@ import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -32,14 +32,14 @@ public class EggeratorJEIPlugin implements IModPlugin {
 
     @Override
     public void registerRecipes(@NotNull IRecipeRegistration reg) {
-        reg.addRecipes(List.of(EggSource.values()), EggLayingJEIRecipeCategory.UID);
+        reg.addRecipes(EggLayingJEIRecipeCategory.recipeType, List.of(EggSource.values()));
 
-        reg.addIngredientInfo(new ItemStack(ModRegistry.EGGERATOR_BLOCK_ITEM.get()), VanillaTypes.ITEM, new TranslatableComponent("info.eggerator.eggerator"));
+        reg.addIngredientInfo(new ItemStack(ModRegistry.EGGERATOR_BLOCK_ITEM.get()), VanillaTypes.ITEM_STACK, Component.translatable("info.eggerator.eggerator"));
     }
 
     @Override
     public void registerRecipeCatalysts(@NotNull IRecipeCatalystRegistration reg) {
-        reg.addRecipeCatalyst(new ItemStack(ModRegistry.EGGERATOR_BLOCK_ITEM.get()), EggLayingJEIRecipeCategory.UID);
-        reg.addRecipeCatalyst(new ItemStack(Items.CHICKEN_SPAWN_EGG), EggLayingJEIRecipeCategory.UID);
+        reg.addRecipeCatalyst(new ItemStack(ModRegistry.EGGERATOR_BLOCK_ITEM.get()), EggLayingJEIRecipeCategory.recipeType);
+        reg.addRecipeCatalyst(new ItemStack(Items.CHICKEN_SPAWN_EGG), EggLayingJEIRecipeCategory.recipeType);
     }
 }

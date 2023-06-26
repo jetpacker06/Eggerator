@@ -4,7 +4,7 @@ import com.jetpacker06.eggerator.eggerator.EggeratorBlockEntity;
 import com.jetpacker06.eggerator.eggerator.EggeratorBlockItem;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 

@@ -3,7 +3,6 @@ package com.jetpacker06.eggerator.eggerator;
 import com.jetpacker06.eggerator.GameRulesHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -62,11 +61,11 @@ public class EggeratorBlockItem extends BlockItem {
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, @NotNull List<Component> pTooltip,
                                 @NotNull TooltipFlag pFlag) {
         if (!pStack.hasTag()) {
-            pTooltip.add(new TranslatableComponent("tooltip.eggerator.empty"));
+            pTooltip.add(Component.translatable("tooltip.eggerator.empty"));
             return;
         }
         assert pStack.getTag() != null;
-        pTooltip.add(new TranslatableComponent("tooltip.eggerator.chickens")
+        pTooltip.add(Component.translatable("tooltip.eggerator.chickens")
                 .append(String.valueOf(pStack.getTag().getInt("chickens")))
         );
     }

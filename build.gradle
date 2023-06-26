@@ -19,24 +19,7 @@ group = 'com.jetpacker06.eggerator'
 archivesBaseName = 'eggerator'
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
-repositories {
-    maven {
-        // location of the maven that hosts JEI files
-        name = "Progwml6 maven"
-        url = "https://dvs1.progwml6.com/files/maven/"
-    }
-    maven {
-        // location of a maven mirror for JEI files, as a fallback
-        name = "ModMaven"
-        url = "https://modmaven.dev"
-    }
-    maven {
-        url "https://www.cursemaven.com"
-        content {
-            includeGroup "curse.maven"
-        }
-    }
-}
+
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
@@ -94,15 +77,38 @@ minecraft {
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
+repositories {
+    maven {
+        // location of the maven that hosts JEI files before January 2023
+        name = "Progwml6's maven"
+        url = "https://dvs1.progwml6.com/files/maven/"
+    }
+    maven {
+        // location of the maven that hosts JEI files since January 2023
+        name = "Jared's maven"
+        url = "https://maven.blamejared.com/"
+    }
+    maven {
+        // location of a maven mirror for JEI files, as a fallback
+        name = "ModMaven"
+        url = "https://modmaven.dev"
+    }
+    maven {
+        url "https://www.cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
+}
 dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
-    // compile against the JEI API but do not include it at runtime
-    compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api")
-    // at runtime, use the full JEI jar
-    runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}")
+
+    compileOnly(fg.deobf("mezz.jei:jei-${mc_version}-common-api:${jei_version}"))
+    compileOnly(fg.deobf("mezz.jei:jei-${mc_version}-forge-api:${jei_version}"))
+    runtimeOnly(fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}"))
 
     //NBT Viewer mod from cursemaven
-    implementation fg.deobf("curse.maven:nbtviewer-514135:3553599")
+    implementation fg.deobf("curse.maven:nbtviewer-514135:${nbtviewer_version}")
 }
 jar {
     manifest {
