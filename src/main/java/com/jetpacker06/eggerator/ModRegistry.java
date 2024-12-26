@@ -3,8 +3,6 @@ package com.jetpacker06.eggerator;
 import com.jetpacker06.eggerator.eggerator.EggeratorBlock;
 import com.jetpacker06.eggerator.eggerator.EggeratorBlockEntity;
 import com.jetpacker06.eggerator.eggerator.EggeratorBlockItem;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
