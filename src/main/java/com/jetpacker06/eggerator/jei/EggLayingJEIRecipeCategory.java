@@ -1,9 +1,6 @@
 package com.jetpacker06.eggerator.jei;
 
-import com.google.common.cache.CacheBuilder;
-import com.google.common.collect.ImmutableList;
 import com.jetpacker06.eggerator.EggeratorMod;
-import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -64,7 +61,7 @@ public class EggLayingJEIRecipeCategory implements IRecipeCategory<EggSource> {
 
     @Override
     public void setRecipe(@NotNull IRecipeLayout recipeLayout, @NotNull EggSource recipe, @NotNull IIngredients ingredients) {
-        int yLevel = background.getHeight() / 2 - 10;// if wrong then 14
+        int yLevel = background.getHeight() / 2 - 10;
         recipeLayout.getItemStacks().init(0, true, 32, yLevel);
         recipeLayout.getItemStacks().init(1, false, 98, yLevel);
         recipeLayout.getItemStacks().set(ingredients);
