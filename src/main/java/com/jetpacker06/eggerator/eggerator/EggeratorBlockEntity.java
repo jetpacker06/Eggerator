@@ -28,12 +28,14 @@ public class EggeratorBlockEntity extends BlockEntity {
         super(ModRegistry.EGGERATOR_BLOCK_ENTITY.get(), pWorldPosition, pBlockState);
     }
     public void drops(Level pLevel) {
+        System.out.println("dropping drops");
         ItemStack blockStack = new ItemStack(ModRegistry.EGGERATOR_BLOCK_ITEM.get());
         CompoundTag tag = new CompoundTag();
         tag.putInt("chickens", this.getChickens());
         blockStack.setTag(tag);
-
-        NonNullList<ItemStack> stacksToDrop = NonNullList.of(blockStack, this.grabEggs());
+        NonNullList<ItemStack> stacksToDrop = NonNullList.create();
+        stacksToDrop.add(blockStack);
+        stacksToDrop.add(this.grabEggs());
         Containers.dropContents(pLevel, this.getBlockPos(), stacksToDrop);
     }
 

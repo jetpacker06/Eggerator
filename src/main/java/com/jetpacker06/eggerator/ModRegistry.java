@@ -3,7 +3,6 @@ package com.jetpacker06.eggerator;
 import com.jetpacker06.eggerator.eggerator.EggeratorBlock;
 import com.jetpacker06.eggerator.eggerator.EggeratorBlockEntity;
 import com.jetpacker06.eggerator.eggerator.EggeratorBlockItem;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -16,21 +15,11 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-import java.util.function.Supplier;
-
 public class ModRegistry {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, EggeratorMod.MOD_ID);
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, EggeratorMod.MOD_ID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, EggeratorMod.MOD_ID);
 
-    private static <T extends Block> RegistryObject<T> registerBlock(Supplier<T> block) {
-        RegistryObject<T> toReturn = BLOCKS.register("eggerator", block);
-        registerBlockItem("eggerator", toReturn);
-        return toReturn;
-    }
-    private static <T extends Block>RegistryObject<Item> registerBlockItem(String name, RegistryObject<T> block) {
-        return ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
-    }
     public static void register(IEventBus eventBus) {
         BLOCKS.register(eventBus);
         ITEMS.register(eventBus);
