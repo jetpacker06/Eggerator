@@ -1,8 +1,8 @@
 package com.jetpacker06.eggerator.eggerator;
 
 import com.jetpacker06.eggerator.ModRegistry;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -18,12 +18,20 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-@SuppressWarnings("deprecation")
+import javax.annotation.ParametersAreNonnullByDefault;
+
 public class EggeratorBlock extends BaseEntityBlock implements EntityBlock {
+
+    public static final MapCodec<EggeratorBlock> CODEC = simpleCodec(EggeratorBlock::new);
+
     public EggeratorBlock(Properties p_49224_) {
         super(p_49224_);
     }
 
+    @Override
+    protected @NotNull MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
+    }
 
     @Override
     public @NotNull RenderShape getRenderShape(@NotNull BlockState pState) {
@@ -43,14 +51,14 @@ public class EggeratorBlock extends BaseEntityBlock implements EntityBlock {
     }
 
     @Override
-    public @NotNull InteractionResult use(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos,
-                         @NotNull Player pPlayer, @NotNull InteractionHand pHand, @NotNull BlockHitResult pHit) {
+    @ParametersAreNonnullByDefault
+    public @NotNull InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHitResult) {
         EggeratorBlockEntity be = (EggeratorBlockEntity) pLevel.getBlockEntity(pPos);
         assert be != null;
         ItemStack eggs = be.grabEggs();
         pPlayer.getInventory().add(eggs);
 
-        return super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
+        return super.useWithoutItem(pState, pLevel, pPos, pPlayer, pHitResult);
     }
 
     @Nullable

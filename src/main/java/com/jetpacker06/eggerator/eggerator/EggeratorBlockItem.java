@@ -1,7 +1,8 @@
 package com.jetpacker06.eggerator.eggerator;
 
 import com.jetpacker06.eggerator.GameRulesHelper;
-import net.minecraft.nbt.CompoundTag;
+import com.jetpacker06.eggerator.ModRegistry;
+import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -12,11 +13,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
 public class EggeratorBlockItem extends BlockItem {
@@ -34,12 +34,15 @@ public class EggeratorBlockItem extends BlockItem {
             return InteractionResult.PASS;
         }
         ensureEggeratorTags(pStack);
-        assert pStack.getTag() != null;
+
         int chickens = getChickens(pStack);
-        if (chickens == GameRulesHelper.entityCramThreshold.get()) {
+        if (chickens >= GameRulesHelper.entityCramThreshold.get()) {
             return InteractionResult.PASS;
         }
-        pStack.getTag().putInt("chickens", chickens + 1);
+
+        DataComponentPatch patch = DataComponentPatch.builder().set(ModRegistry.CHICKENS_COUNT.get(), chickens + 1).build();
+        pStack.applyComponents(patch);
+
         pInteractionTarget.remove(Entity.RemovalReason.DISCARDED);
 
         pPlayer.setItemInHand(pUsedHand, pStack);
@@ -47,31 +50,25 @@ public class EggeratorBlockItem extends BlockItem {
     }
 
     public static void ensureEggeratorTags(ItemStack pStack) {
-        if (!pStack.hasTag()) {
-            pStack.setTag(new CompoundTag());
-        }
-        CompoundTag tag = pStack.getTag();
-        assert tag != null;
-        if (!tag.contains("chickens")) {
-            tag.putInt("chickens", 0);
+        Integer chickens = pStack.getComponents().get(ModRegistry.CHICKENS_COUNT.get());
+        if (chickens == null) {
+            DataComponentPatch patch = DataComponentPatch.builder().set(ModRegistry.CHICKENS_COUNT.get(), 0).build();
+            pStack.applyComponents(patch);
         }
     }
 
     @Override
-    public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, @NotNull List<Component> pTooltip,
-                                @NotNull TooltipFlag pFlag) {
-        if (!pStack.hasTag()) {
-            pTooltip.add(Component.translatable("tooltip.eggerator.empty"));
-            return;
-        }
-        assert pStack.getTag() != null;
-        pTooltip.add(Component.translatable("tooltip.eggerator.chickens")
-                .append(String.valueOf(pStack.getTag().getInt("chickens")))
+    @ParametersAreNonnullByDefault
+    public void appendHoverText(ItemStack pStack, TooltipContext pContext, List<Component> pTooltipComponents, TooltipFlag pTooltipFlag) {
+        Integer chickens = pStack.getComponents().get(ModRegistry.CHICKENS_COUNT.get());
+        chickens = chickens == null ? 0 : chickens;
+        pTooltipComponents.add(Component.translatable("tooltip.eggerator.chickens")
+                .append(": " + chickens)
         );
     }
 
     public static int getChickens(ItemStack pStack) {
-        assert pStack.getTag() != null;
-        return pStack.getTag().getInt("chickens");
+        Integer chickens = pStack.getComponents().get(ModRegistry.CHICKENS_COUNT.get());
+        return chickens == null ? 0 : chickens;
     }
 }

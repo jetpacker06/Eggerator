@@ -3,7 +3,11 @@ package com.jetpacker06.eggerator.eggerator;
 import com.jetpacker06.eggerator.ModRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.component.DataComponentMap;
+import net.minecraft.core.component.DataComponentPatch;
+import net.minecraft.core.component.PatchedDataComponentMap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.Containers;
 import net.minecraft.world.item.ItemStack;
@@ -14,6 +18,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
@@ -28,12 +33,15 @@ public class EggeratorBlockEntity extends BlockEntity {
         super(ModRegistry.EGGERATOR_BLOCK_ENTITY.get(), pWorldPosition, pBlockState);
     }
     public void drops(Level pLevel) {
+        System.out.println("dropping drops");
         ItemStack blockStack = new ItemStack(ModRegistry.EGGERATOR_BLOCK_ITEM.get());
-        CompoundTag tag = new CompoundTag();
-        tag.putInt("chickens", this.getChickens());
-        blockStack.setTag(tag);
 
-        NonNullList<ItemStack> stacksToDrop = NonNullList.of(blockStack, this.grabEggs());
+        DataComponentPatch patch = DataComponentPatch.builder().set(ModRegistry.CHICKENS_COUNT.get(), this.getChickens()).build();
+        blockStack.applyComponents(patch);
+
+        NonNullList<ItemStack> stacksToDrop = NonNullList.create();
+        stacksToDrop.add(blockStack);
+        stacksToDrop.add(this.grabEggs());
         Containers.dropContents(pLevel, this.getBlockPos(), stacksToDrop);
     }
 
@@ -100,16 +108,16 @@ public class EggeratorBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(@NotNull CompoundTag tag) {
+    protected void saveAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider pRegistries) {
         tag.putInt("eggs", itemHandler.getStackInSlot(0).getCount());
         tag.putInt("chickens", this.chickens);
         tag.putInt("eggTime", eggTime);
-        super.saveAdditional(tag);
+        super.saveAdditional(tag, pRegistries);
     }
 
     @Override
-    public void load(@NotNull CompoundTag nbt) {
-        super.load(nbt);
+    public void loadAdditional(@NotNull CompoundTag nbt, HolderLookup.@NotNull Provider pRegistries) {
+        super.loadAdditional(nbt, pRegistries);
         int eggs = nbt.getInt("eggs");
         this.chickens = nbt.getInt("chickens");
         this.eggTime = nbt.getInt("eggTime");

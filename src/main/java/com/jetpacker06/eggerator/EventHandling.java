@@ -22,9 +22,10 @@ public class EventHandling {
             player.getMainHandItem()
                 : player.getOffhandItem();
         EggeratorBlockItem.ensureEggeratorTags(usedStack);
-        assert usedStack.getTag() != null;
+
         EggeratorBlockEntity be = (EggeratorBlockEntity) event.getEntity().level().getBlockEntity(event.getPos());
         assert be != null;
-        be.setChickens(usedStack.getTag().getInt("chickens"));
+        Integer chickens = usedStack.getComponents().get(ModRegistry.CHICKENS_COUNT.get());
+        if (chickens != null) be.setChickens(chickens);
     }
 }
